@@ -18,10 +18,13 @@ services:
       context: ./general_ui
       dockerfile: Dockerfile
       args:
-        - REACT_APP_API_URL=http://api:8001
+        # React derlenirken API adresini bilmeli, bu yüzden senin canlı domainini yazdık
+        - REACT_APP_API_URL=https://api.healthcare.mustafasaritas.nl
     ports:
-      - "3000:3000"
+      # Sunucudaki 3000 portu dolu olduğu için dışarıya 3005 olarak açtık
+      - "3005:3000"
     environment:
-      - REACT_APP_API_URL=http://api:8001
+      # Konteyner çalışma anında da doğru API adresini hedeflemesi için güncellendi
+      - REACT_APP_API_URL=https://api.healthcare.mustafasaritas.nl
     depends_on:
       - api
