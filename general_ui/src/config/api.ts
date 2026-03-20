@@ -6,12 +6,12 @@
 
 // Get API URL from runtime config (set by server.js) or environment variable or default
 const getAPIBaseURL = (): string => {
-  // Check if window.API_CONFIG is set by server
-  if (typeof window !== 'undefined' && (window as any).API_CONFIG?.API_URL) {
+  // Check if window.API_CONFIG was loaded by server (empty string = relative URLs, which is valid)
+  if (typeof window !== 'undefined' && (window as any).API_CONFIG && 'API_URL' in (window as any).API_CONFIG) {
     return (window as any).API_CONFIG.API_URL;
   }
   // Fallback to environment variable set at build time
-  return process.env.REACT_APP_API_URL || 'http://localhost:8001';
+  return process.env.REACT_APP_API_URL || '';
 };
 
 // Factory function to get fresh endpoints each time (NOT cached from build time)
