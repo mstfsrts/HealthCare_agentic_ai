@@ -9,9 +9,9 @@ const app = express();
 // Locally: http://localhost:8001
 const BACKEND_API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8001';
 
-// Frontend API URL (what browsers should use - always localhost)
-// Proxy through this server
-const FRONTEND_API_URL = 'http://localhost:3000';
+// Frontend API URL (what browsers should use)
+// Empty string = relative URLs, works with any domain/proxy
+const FRONTEND_API_URL = process.env.FRONTEND_URL || '';
 
 // Serve static files from the build directory
 app.use(express.static(path.join(__dirname, 'build')));
@@ -54,7 +54,7 @@ app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3005;
 app.listen(PORT, () => {
   console.log(`Server running on http://0.0.0.0:${PORT}`);
   console.log(`Backend API URL: ${BACKEND_API_URL}`);

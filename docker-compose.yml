@@ -1,30 +1,29 @@
 services:
-  api:
-    build:
-      context: ./general_api
-      dockerfile: Dockerfile
-    ports:
-      - "8001:8001"
-    env_file:
-      - .env
-    environment:
-      - API_HOST=0.0.0.0
-      - API_PORT=8001
-    volumes:
-      - ./general_api:/app
+    api:
+        build:
+            context: ./general_api
+            dockerfile: Dockerfile
+        ports:
+            - "8001:8001"
+        env_file:
+            - .env
+        environment:
+            - API_HOST=0.0.0.0
+            - API_PORT=8001
+        volumes:
+            - ./general_api:/app
 
-  ui:
-    build:
-      context: ./general_ui
-      dockerfile: Dockerfile
-      args:
-        # React derlenirken API adresini bilmeli, bu yüzden senin canlı domainini yazdık
-        - REACT_APP_API_URL=https://api.healthcare.mustafasaritas.nl
-    ports:
-      # Sunucudaki 3000 portu dolu olduğu için dışarıya 3005 olarak açtık
-      - "3005:3000"
-    environment:
-      # Konteyner çalışma anında da doğru API adresini hedeflemesi için güncellendi
-      - REACT_APP_API_URL=https://api.healthcare.mustafasaritas.nl
-    depends_on:
-      - api
+    ui:
+        build:
+            context: ./general_ui
+            dockerfile: Dockerfile
+            args:
+                - REACT_APP_API_URL=http://api:8001
+                - REACT_APP_VALID_EMAIL=patient@healthcare.com
+                - REACT_APP_VALID_PASSWORD=password123
+        ports:
+            - "3005:3005"
+        environment:
+            - REACT_APP_API_URL=http://api:8001
+        depends_on:
+            - api
