@@ -26,12 +26,15 @@ app.get('/api/config', (req, res) => {
 });
 
 // Reverse proxy for API requests - forward browser requests to backend
+// NOTE: /health-news must come before /health to avoid prefix match
 app.use('/health-news', createProxyMiddleware({
   target: BACKEND_API_URL,
   changeOrigin: true,
-  pathRewrite: {
-    '^/health-news': '/health-news'
-  }
+}));
+
+app.use('/health', createProxyMiddleware({
+  target: BACKEND_API_URL,
+  changeOrigin: true,
 }));
 
 app.use('/basic', createProxyMiddleware({
@@ -45,6 +48,11 @@ app.use('/intermediate', createProxyMiddleware({
 }));
 
 app.use('/advanced', createProxyMiddleware({
+  target: BACKEND_API_URL,
+  changeOrigin: true,
+}));
+
+app.use('/login', createProxyMiddleware({
   target: BACKEND_API_URL,
   changeOrigin: true,
 }));
