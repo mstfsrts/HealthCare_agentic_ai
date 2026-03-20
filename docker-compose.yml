@@ -18,7 +18,7 @@ services:
             context: ./general_ui
             dockerfile: Dockerfile
             args:
-                - REACT_APP_API_URL=http://api:8001
+                - REACT_APP_API_URL=
                 - REACT_APP_VALID_EMAIL=patient@healthcare.com
                 - REACT_APP_VALID_PASSWORD=password123
         ports:

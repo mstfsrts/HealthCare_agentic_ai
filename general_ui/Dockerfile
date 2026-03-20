@@ -1,6 +1,6 @@
 FROM node:20-alpine
 
-ARG REACT_APP_API_URL=http://api:8001
+ARG REACT_APP_API_URL=
 ARG REACT_APP_VALID_EMAIL=patient@healthcare.com
 ARG REACT_APP_VALID_PASSWORD=password123
 
